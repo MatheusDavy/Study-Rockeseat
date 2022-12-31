@@ -1,0 +1,62 @@
+.asidebar{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 1rem;
+    background-color: var(--gray-800);
+}
+
+.cover{
+    width: 100%;
+    height: 72px;
+    object-fit: cover;
+}
+
+.profileContainer{
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: calc(0px - 1.5rem - 6px);
+}
+
+
+.profileName{
+    margin-top: 1rem;
+    color: var(--gray-100);
+    line-height: 1.6;
+}
+
+.profileStatus{
+font-size: 0.875rem;
+line-height: 1.6;
+color: var(--gray-400);
+}
+
+.asidebar footer{
+    border-top: 1px solid var(--green-500);
+    margin-top: 1.5rem;
+    padding: 1.5rem 2rem 2rem;
+}
+
+.asidebar footer a{
+    width: 100%;
+    background-color: transparent;
+    color: var(--green-500);
+    border: 1px solid var(--green-500);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.1s;
+}
+
+.asidebar footer a:hover{
+    background-color: var(--green-500);
+    color: var(--white);
+}
