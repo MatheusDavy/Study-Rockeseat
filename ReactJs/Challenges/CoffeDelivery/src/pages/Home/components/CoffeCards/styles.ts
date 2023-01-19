@@ -33,9 +33,10 @@ export const CoffeContainer = styled.div`
 export const ImageCoffe = styled.img`
     width: 120px;
     height: 120px;
-    object-fit: contain;
 
     margin-top: -20px;
+
+    border-radius: 50%;
 `
 
 export const InformationContainer = styled.div`

@@ -50,6 +50,7 @@ export function TotalPrice(){
         updateTotalPrice(totalsPrice.deliveryMoreTotalPrice)
     }, [totalsPrice])
 
+
     return(
         <ContainerTotalPrice>
             <ContainerInfoTotal>

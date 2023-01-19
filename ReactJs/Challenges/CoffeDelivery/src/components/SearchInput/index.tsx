@@ -13,13 +13,20 @@ export function SearchComponent(){
         updateSearchValue(value)
     }
 
-    return(
-        <ContainerSearchInput
-            type="text"
-            value={search}
-            onChange={handleUpdateSearchValue} 
-            placeholder={'Buscar'}
-        />
+    const {checkout} = useParams()
+
+    return(      
+        <>
+            {!checkout &&
+                <ContainerSearchInput
+                type="text"
+                value={search}
+                onChange={handleUpdateSearchValue} 
+                placeholder={'Buscar'}
+            />
+            }
+        </>
+
     )
 
 }

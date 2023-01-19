@@ -1,5 +1,6 @@
 import { createContext, useState, ReactNode, useEffect } from "react";
 import nextId from "react-id-generator";
+import { AllCoffes } from "../../API/coffes";
 
 export interface CoffeProps {
   id: string;
@@ -31,53 +32,12 @@ interface CoffeContextType {
 export const CoffeContext = createContext({} as CoffeContextType)
 
 export function DataCoffeProvider({ children }: CoffeContextProviderProps) {
-  const [coffes, setCoffes] = useState<CoffeProps[]>([
-    {
-      id: nextId(),
-      image: '',
-      informations: [
-        'INFORMATIONS',
-        'INFORMATION',
-      ],
-      name: "Expresso Tradicional",
-      description: "O tradicional café feito com água quente e grãos moídos",
-      price: "9,00",
-      amount: 1,
-      isSelected: false,
-    },
-    {
-      id: nextId(),
-      image: '',
-      informations: [
-        'INFORMATIONS',
-      ],
-      name: "Expresso Americano",
-      description: "Expresso diluído, menos intenso que o tradicional",
-      price: "10,00",
-      amount: 1,
-      isSelected: false,
-    },
-    {
-      id: nextId(),
-      image: '',
-      informations: [
-        'INFORMATIONS',
-        'INFORMATION',
-        'INFORMATIO'
-      ],
-      name: "Expresso Cremoso",
-      description: "Café expresso tradicional com espuma cremosa",
-      price: "15,00",
-      amount: 1,
-      isSelected: false,
-    },
-  ]);
+  const [coffes, setCoffes] = useState<CoffeProps[]>(AllCoffes);
+
   const [coffesSelected, setCoffesSelected] = useState<CoffeProps[]>([])
 
   const [search, setSearch] = useState('')
-
   const lowercaseSearch = search.toLowerCase()
-
   const filteredCoffes = coffes.filter((coffe)=>{
     return coffe.name.toLowerCase().includes(lowercaseSearch)
   })
@@ -148,7 +108,6 @@ export function DataCoffeProvider({ children }: CoffeContextProviderProps) {
     setCoffesSelected(newCoffeSelected)
     //Ajustar para ele não ser renderizado assim que o componente for montado e não iniciar com um array vazio
   }, [coffes])
-
 
   return (
     <CoffeContext.Provider
