@@ -1,12 +1,10 @@
 import { ChangeTheme } from "./ChangeTheme";
-import { ButtonMenu, ButtonNavigation, HeaderContainer, NavigateContainer, NavbarLink, ProfileContainer, ButtonProfile, PopupProfile } from "./styles";
-import { CgMenuGridO } from 'react-icons/cg'
+import { HeaderContainer, NavigateContainer, NavbarLink, ProfileContainer, ButtonProfile, PopupProfile } from "./styles";
 import { FiShoppingCart } from 'react-icons/fi'
 import { BsChatLeft } from 'react-icons/bs'
 import { IoNotificationsOutline } from 'react-icons/io5'
 import {AiFillCaretDown} from 'react-icons/ai'
-import { useContext, useState } from "react";
-import { ActiveMenuContext } from "../../Context/ActiveAsidebar";
+import { useState } from "react";
 import { Languages } from "./SelectLanguage";
 import { useTranslation } from "react-i18next";
 
@@ -14,14 +12,7 @@ export function Header(){
 
     const {t} = useTranslation()
     
-
-    const {changeAsidebarActivate} = useContext(ActiveMenuContext)
-
     const [isActivePopupProfile, setActivePopupProfile] = useState(false)
-
-    function handleActiveAsidebar(){
-        changeAsidebarActivate(true)
-    }
 
     function handleActivePopupProfile(){
         setActivePopupProfile(!isActivePopupProfile)
@@ -31,16 +22,11 @@ export function Header(){
         <HeaderContainer>
 
             <div className="container">
-                <ButtonMenu onClick={handleActiveAsidebar}>
-                    <CgMenuGridO />
-                </ButtonMenu>   
-
-
                 <NavigateContainer>
 
-                    <ButtonNavigation>
+                    <NavbarLink to='/goals'>
                         <FiShoppingCart size={20} />
-                    </ButtonNavigation>
+                    </NavbarLink>
 
                     <NavbarLink to={'/chat'}>
                         <BsChatLeft  size={20}/>

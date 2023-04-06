@@ -1,10 +1,10 @@
 // React Router Dom
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 
-// Cpmponents
+// Components
 import { DefaultLayout } from '../Layouts/DefaultLayout'
-import { Calendar } from '../Pages/Calendar'
 import { Home } from '../Pages/Home'
+import { WalletPage } from '../Pages/Wallet'
 
 export function Router() {
     return (
@@ -12,7 +12,7 @@ export function Router() {
          <Routes>
             <Route path="/" element={<DefaultLayout />}>
                 <Route path='/' element={<Home />} />
-                <Route path='/calendar' element={<Calendar />} />
+                <Route path='/wallet' element={<WalletPage />} />
             </Route>
         </Routes>
        </BrowserRouter>

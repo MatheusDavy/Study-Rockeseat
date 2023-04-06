@@ -1,65 +1,39 @@
 import { ReactNode } from "react";
-import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+import styled, { css } from "styled-components";
+import { fontTemplate } from "../../styles/templates/fonts";
 
-interface AsidebarContainerProps {
-  isActive: boolean;
-}
 
-export const AsidebarContainer = styled.aside<AsidebarContainerProps>`
+
+export const AsidebarContainer = styled.aside`
   display: flex;
   flex-direction: column;
   gap: 80px;
 
-  position: fixed;
-  inset: 0;
+  width: 100%;
+  padding: 30px;
 
-  width: 30vw;
-  height: 100vh;
-  padding-top: 30px;
-  padding-left: 30px;
+  height: 95vh;
 
-  background-color: ${(props) => props.theme.colors.primary};
-  box-shadow: 1px 0px 10px gray;
+  background: linear-gradient(127.09deg, rgb(${(props) => props.theme.colors.primary}, 0.94) 19.41%, rgb(${(props) => props.theme.colors.primary}, 0.49) 76.65%) border-box;
+  backdrop-filter: blur(30px);
+
   transition: 0.4s;
 
-  transform: ${(props) =>
-    props.isActive === true ? "translateX(0px)" : "translateX(-120%)"};
-`;
-// Close Asidebar
-export const CloseAsidebar = styled.button`
-  position: absolute;
-  right: 25px;
-  top: 25px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
-  height: fit-content;
-  padding: 3px;
-  border: 0;
-  background-color: transparent;
-
-  cursor: pointer;
-
-  svg {
-    transition: 0.4s;
-    fill: ${(props) => props.theme.colors.secundary};
-  }
-
-  &:hover {
-    svg {
-      fill: ${(props) => props.theme.colors.hovers};
-    }
-  }
+  border-radius: 20px;
 `;
 
 // Logo Container
 export const LogoContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 15px;
+
+  ${({ theme }) => css`
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 15px;
+
+      ${fontTemplate('1.6rem', '2rem', 300, theme.texts.title, 'Arial', 'center')}
+  `}
 `;
 
 // Links Container
@@ -94,66 +68,56 @@ export const LinksContainer = styled.nav`
     border: 3px solid #ffffff;
   }
 `;
-export const LinksNav = styled.div`
+
+
+// List
+export const LinksNavContainer = styled.ul`
   display: flex;
   flex-direction: column;
+  gap: 7px;
+`
 
-  h4 {
-    font-size: 1.25rem;
-    text-transform: uppercase;
-    font-weight: 300;
-    margin: 0;
-    color: ${(props) => props.theme.texts.title};
-  }
-`;
-export const ListContainer = styled.ul`
-  display: flex;
-  flex-direction: column;
+// NavLink Component
+export const Links = styled(NavLink)`
+  
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    padding: 10px 16px;
+    border-radius: 9px;
+    gap: 10px;
+    
+    transition: ${theme.transition};
+    
+    text-decoration: none;
+    ${fontTemplate('1.6rem', '1', 400, theme.texts.title, 'Arial', 'center')};
 
-  list-style: none;
 
-  li {
-    a {
-      padding: 18px 0px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
+    .icon--container{
+        width: 35px;
+        height: 35px;
+        border-radius: 8px;
+        
+        background-color: rgb(${theme.buttons.hovers});
+        color: ${theme.colors.secundary};
 
-      text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: ${theme.transition};
+    }
 
-      width: fit-content;
+    &.active, &:hover{
+      background-color: rgb(${theme.buttons.hovers});
 
-      font-size: 1.25rem;
-      color: ${(props) => props.theme.texts.paragraph};
-
-      transition: 0.4s;
-
-      font-weight: 500;
-
-      position: relative;
-
-      &:hover {
-        color: ${(props) => props.theme.texts.hovers};
-      }
-
-      &.active {
-        color: ${(props) => props.theme.texts.hovers};
-
-        &::after {
-          content: "";
-          position: absolute;
-          left: -25px;
-          top: 50%;
-          transform: translateY(-50%);
-
-          width: 0;
-          height: 0;
-          
-          border-top: 7px solid transparent;
-          border-bottom: 7px solid transparent;
-          border-left: 7px solid ${(props) => props.theme.texts.hovers};
-        }
+      .icon--container{
+        color: ${theme.colorsStandard.white};
+        background-color: ${theme.colors.secundary};
       }
     }
-  }
-`;
+
+  `}
+
+`

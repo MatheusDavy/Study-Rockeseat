@@ -30,8 +30,8 @@ export const ChangeThemeContainer = styled.button<ChangeThemeContainerProps>`
 
         border-radius: 50%;
 
-        background-color: ${props => props.theme.colors.ChangeThemeToggleBg };
-        color: ${props => props.theme.colors.ChangeThemeToggleCollor };
+        background-color: ${props => props.theme.colors.secundary };
+        color: ${props => props.theme.colorsStandard.white};
 
 
         transform: ${props => props.variant === 'light' ? 'translateX(0)' : "translateX(100%)" };

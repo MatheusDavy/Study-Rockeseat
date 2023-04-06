@@ -8,19 +8,26 @@ import { dark } from "./styles/themes/dark"
 
 import { ChangeThemeContext, ChangeThemeProvider } from "./Context/Theme"
 import { ActiveAsidebarProvider } from "./Context/ActiveAsidebar"
+import "./API/home"
+import { CreditCardProvider } from "./Context/CreditCard"
+import { TransactionsProvider } from "./Context/Transactions"
+import { TransactionProvider } from "./Context/Transaction"
 
 function App() {
 
-  const {theme} = useContext(ChangeThemeContext)
+  const { theme } = useContext(ChangeThemeContext)
 
   return (
-        <ThemeProvider theme={theme}>
-          <ActiveAsidebarProvider>
-            <Router/> 
-          </ActiveAsidebarProvider>
+    <ThemeProvider theme={theme}>
+      <CreditCardProvider>
+       <TransactionProvider>
+        <Router />
+       </TransactionProvider>
+      </CreditCardProvider>
+      <GlobalStyle />
+    </ThemeProvider>
 
-        <GlobalStyle />
-        </ThemeProvider>
+
   )
 }
 

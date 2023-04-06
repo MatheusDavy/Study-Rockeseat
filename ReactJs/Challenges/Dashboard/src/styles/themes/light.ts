@@ -3,8 +3,9 @@ export const light = {
     title: 'light',
 
     colors: {
-        primary: 'white',
-        secundary: 'gray',
+        primary: '255, 255, 255',
+        secundary: '#2109AB',
+        thirth: '76, 76, 76',
 
         changeThemeButtonBg: 'gray',
         ChangeThemeToggleBg: 'black',
@@ -14,16 +15,26 @@ export const light = {
     },
 
     texts: {
-        title: 'gray',
+        title: "33, 9, 255",
         paragraph: 'black',
 
 
-        hovers: 'blue'
+        hovers: '#636D85'
     },
 
     buttons: {
-      hovers:"#DDDCDB",
-      background:'#F2F2F2'
+      hovers:"143, 154, 156",
+      background:'#8f9a9c'
+    },
+
+    transition: '0.4s',
+
+    colorsStandard: {
+      green: "#0BD47C",
+
+      white: '#fff',
+
+      red: "#F60C13",
     }
   
   }

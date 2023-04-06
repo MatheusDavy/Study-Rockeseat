@@ -1,54 +1,39 @@
-import { AsidebarContainer, CloseAsidebar, LinksNav, ListContainer, LogoContainer } from "./styles"
-import {IoMdClose} from 'react-icons/io'
-import { useContext, useState } from "react"
-import { links } from "../../data/links"
-import {Link, NavLink} from 'react-router-dom'
+import { AsidebarContainer, LinksContainer, LogoContainer, LinksNavContainer, Links } from "./styles"
+
+// Icons
+import { HiHome } from 'react-icons/hi'
+import {BsFillCreditCard2BackFill} from 'react-icons/bs'
+
+// Datas
+import { linksNav } from "../../Data/Asidebar"
+
+export function Asidebar() {
 
 
-// Components Styled
-import { LinksContainer } from "./styles"
-import { ActiveMenuContext } from "../../Context/ActiveAsidebar"
+    return (
+        <AsidebarContainer>
 
-export function Asidebar(){
-
-    const {activeAsidebar, changeAsidebarActivate} = useContext(ActiveMenuContext)
-
-    function handleActiveAsidebar(){
-        changeAsidebarActivate(false)
-    }
-
-    return(
-        <AsidebarContainer isActive={activeAsidebar}>
-
-            <CloseAsidebar onClick={handleActiveAsidebar}>
-                <IoMdClose size={34}/>
-            </CloseAsidebar>
-            
             <LogoContainer>
-                LOGO
+                DASHBOARD
             </LogoContainer>
 
             <LinksContainer>
-                {links.map( link => {
-                    return (
-                        <LinksNav key={link.title}>
-                            <h4>{link.title}</h4>
-                            <ListContainer>
-                                {link.links.map( sublinks => {
-                                   return(
-                                    <li key={sublinks.name}>
-                                        <NavLink to={`/${sublinks.name}`}>
-                                            {sublinks.icon} {sublinks.name}
-                                        </NavLink>
-                                    </li>
-                                   ) 
-                                })}
-                            </ListContainer>
-                        </LinksNav>
-                    )
-                } ) }
-            </LinksContainer>
 
+                <LinksNavContainer>
+                    {linksNav.map((link) => (
+                        <li key={link.name}>
+                            <Links to={link.link}>
+                                <div className="icon--container">
+                                    {link.icone}
+                                </div>
+
+                                <span>{link.name}</span>
+                            </Links>
+                        </li>
+                    ))}
+                </LinksNavContainer>
+
+            </LinksContainer>
 
         </AsidebarContainer>
     )

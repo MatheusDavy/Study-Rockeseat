@@ -6,37 +6,20 @@ export const HeaderContainer = styled.header`
   padding: 10px 0px;
 
   display: flex;
-  justify-content: space-between;
-  background-color: ${(props) => props.theme.colors.primary};
-  box-shadow: 0px 5px 10px gray;
+
+  position: sticky;
+  z-index: 1000;
+  background: linear-gradient(127.09deg, rgb(${(props) => props.theme.colors.primary}, 0.94) 19.41%, rgb(${(props) => props.theme.colors.primary}, 0.49) 76.65%) border-box;
+  backdrop-filter: blur(30px);
+  height: fit-content;
+  border-radius: 20px;
 
   .container {
     width: 90%;
-    max-width: 1120px;
     margin: 0 auto;
 
     display: flex;
-    justify-content: space-between;
-  }
-`;
-
-// Toggle Menu
-export const ButtonMenu = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  pad: 1px;
-
-  border: 0;
-  background-color: transparent;
-
-  color: ${(props) => props.theme.colors.secundary};
-
-  cursor: pointer;
-
-  svg {
-    font-size: 40px;
+    justify-content: flex-end;
   }
 `;
 
@@ -47,29 +30,13 @@ export const NavigateContainer = styled.div`
   gap: 25px;
 `;
 
-export const ButtonNavigation = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px;
-  background-color: transparent;
-  border: 0;
-
-  cursor: pointer;
-
-  color: ${(props) => props.theme.colors.secundary};
-
-  width: fit-content;
-  height: fit-content;
-`;
-
 export const NavbarLink = styled(NavLink)`
   display: flex;
   align-items: center;
   justify-content: center;
 
   text-decoration: none;
-  color: ${(props) => props.theme.colors.secundary};
+  color: ${(props) => `rgb(${props.theme.texts.title})`};
 
   width: fit-content;
   height: fit-content;
@@ -86,8 +53,8 @@ export const NavbarLink = styled(NavLink)`
     width: 18px;
     height: 18px;
 
-    background-color: cyan;
-    color: ${(props) => props.theme.colors.secundary};
+    background-color: ${(props) => props.theme.colors.secundary};
+    color: ${(props) => props.theme.colorsStandard.white};
 
     display: flex;
     align-items: center;
@@ -111,15 +78,15 @@ export const ProfileContainer = styled.div`
 export const ButtonProfile = styled.button`
   display: flex;
   align-items: center;
-  padding:5px;
+  padding: 5px;
   transition: 0.4s;
   gap: 10px;
   cursor: pointer;
   border: 0;
   background-color: transparent;
   border-radius: 6px;
-  &:hover{
-    background-color: ${(props) => props.theme.buttons.hovers} ;
+  &:hover {
+    background-color: ${(props) => props.theme.buttons.hovers};
   }
 
   .profile__image {
@@ -129,15 +96,15 @@ export const ButtonProfile = styled.button`
     border: 1px solid ${(props) => props.theme.colors.secundary};
   }
 
-  p{
-    font-size: 16px;
-    color: ${(props) => props.theme.colors.secundary};
+  p {
+    font-size: 1.6rem;
+    color: ${(props) => `rgb(${props.theme.texts.title})`};
   }
 
-  svg{
+  svg {
     color: ${(props) => props.theme.colors.secundary};
     transition: 0.4s;
-    &.active{
+    &.active {
       transform: rotate(180deg);
     }
   }
@@ -155,16 +122,15 @@ export const PopupProfile = styled.div<PopupProfileProps>`
       ? "translateY(calc(100% + 20px)) scale(1)"
       : "translateY(70%) scale(0.3)"};
   opacity: ${(props) => (props.isActive === true ? "1" : "0")};
-  z-index: ${(props) => (props.isActive === true ? "1" : "-1")};
-  background-color: ${(props) => props.theme.colors.primary};;
-  box-shadow: 0px 5px 10px gray;
+  z-index: ${(props) => (props.isActive === true ? "1000" : "-1")};
+  background: rgb(${(props) => props.theme.colors.primary});
+  border: 1px solid ${(props) => props.theme.colors.secundary};
 
   transition: 0.4s;
   width: fit-content;
   height: auto;
   padding: 20px;
   border-radius: 8px;
- 
 
   display: flex;
   flex-direction: column;
