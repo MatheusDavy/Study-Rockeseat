@@ -1,33 +1,29 @@
-import { ReactNode, useReducer, useRef, useState } from "react";
+import { memo, useContext, useEffect, useReducer, useRef, useState } from "react";
 import { TransactionContext } from "./context";
-import { TransactionsProps, reducer } from "./reducer";
+import { reducer } from "./reducer";
 import { buildAction } from "./build_actions";
-
-interface ChildrenProps {
-    children: ReactNode
-}
+import { ChildrenProps, TransactionsProps } from "./interfaces";
 
 
-const initalValues: TransactionsProps = {
+const initalValues: TransactionsProps | null = {
     income: 0,
     expense: 0,
     totalAmount: 0,
     transactionAPI: []
 }
 
-export function TransactionProvider({children}: ChildrenProps){
+function TransactionContextProvider({ children }: ChildrenProps) {
 
     const [isOpenModal, setIsOpenModal] = useState(false)
 
     const [transactions_API, dispatch] = useReducer(reducer, initalValues)
-    const actions = useRef(buildAction(dispatch))
-    const actionCurrent = actions.current
+    const actionCurrent = useRef(buildAction(dispatch)).current
 
     function openCloseModal() {
         setIsOpenModal(!isOpenModal)
     }
 
-    return(
+    return (
         <TransactionContext.Provider
             value={{
                 actionCurrent,
@@ -40,3 +36,17 @@ export function TransactionProvider({children}: ChildrenProps){
         </TransactionContext.Provider>
     )
 }
+
+export default memo(TransactionContextProvider)
+
+export const useTrsactionContext = () => {
+  const context = useContext(TransactionContext);
+
+  if (typeof context === "undefined") {
+    throw new Error(
+      "You have to use useTransactionContext inside <TransactionContextProvider />"
+    );
+  }
+
+  return {...context};
+};

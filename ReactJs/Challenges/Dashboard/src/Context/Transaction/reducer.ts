@@ -1,24 +1,5 @@
 import * as actionTypes from './action_types'
-
-export interface TransactionsProps {
-    income: number
-    expense: number
-    totalAmount: number
-    transactionAPI: TransactionProps[]
-}
-
-export interface TransactionProps {
-    id: string
-    description: string
-    date: string
-    amount: string
-    type: "income" | "expense"
-}
-
-interface DispatchProps {
-    type: string;
-    value: TransactionProps
-}
+import { DispatchProps, TransactionProps, TransactionsProps } from './interfaces'
 
 export const reducer = (state: TransactionsProps, action: DispatchProps) => {
     switch (action.type) {
@@ -31,6 +12,8 @@ export const reducer = (state: TransactionsProps, action: DispatchProps) => {
     }
 }
 
+
+// Reducer Functions
 const deleteTransaction = (state: TransactionsProps, action: DispatchProps) => {
     const newArrayValues = state.transactionAPI.filter(transaction => {
         if (transaction.id != action.value.id) {
@@ -58,12 +41,15 @@ const newTransaction = (state: TransactionsProps, action: DispatchProps) => {
     const newExpense = updateExpense(newArrayValues)
     const newAmount = updateAmount(newIncome, newExpense)
 
-    return {
+    const returnNewTransaction = {
         income: newIncome,
         expense: newExpense,
         totalAmount: newAmount,
         transactionAPI: newArrayValues
     }
+
+    return returnNewTransaction
+
 }
 
 const updateIncome = (newValue: TransactionProps[],) => {
@@ -98,3 +84,4 @@ const updateAmount = (income: number, expense: number) => {
     const newAmount: number = income - expense
     return newAmount
 }
+

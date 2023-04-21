@@ -1,8 +1,8 @@
 import * as actionTypes from './action_types'
-import { TransactionProps } from './reducer'
+import { TransactionProps } from './interfaces'
 
 
-export const buildAction = (dispatch) => {
+export const buildAction = (dispatch: any) => {
 
     return { 
         newTransaction: (transaction: TransactionProps) => dispatch({ type: actionTypes.ADD_TRANSACTION, value: transaction }),

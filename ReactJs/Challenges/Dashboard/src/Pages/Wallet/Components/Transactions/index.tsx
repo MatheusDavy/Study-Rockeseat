@@ -1,16 +1,15 @@
 // Components
 import { TransactionsContainer, TransactionsHeader } from "./style";
-import { TransactionsTable } from "../../../../Components/TransactionsTable";
+import { TransactionsTable } from "../../../../Components/TransactionsCard";
 // icons
 import { IoMdAddCircle } from 'react-icons/io'
-import { useContext } from "react";
-import { TransactionsContext } from "../../../../Context/Transactions";
 import { TransactionsModal } from "../../../../Components/Modal/Transacrions";
 import { TransactionContext } from "../../../../Context/Transaction/context";
+import { useTrsactionContext } from "../../../../Context/Transaction";
 
 export function Transactions() {
 
-  const { openCloseModal, transactions_API } = useContext(TransactionContext)
+  const { openCloseModal, transactions_API } = useTrsactionContext()
 
   function handleOpenModal() {
     openCloseModal()

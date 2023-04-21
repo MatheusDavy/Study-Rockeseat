@@ -5,7 +5,7 @@ import { BsFillArrowUpCircleFill, BsFillArrowDownCircleFill } from 'react-icons/
 import { FaMoneyBill } from 'react-icons/fa'
 // Components
 import { CardsRevenues, HomeContainer, HomeContainerCards, HomeGridOne } from './styles'
-import { converteCurrencyToCurremtLanguage } from '../../Context/ConverteCurrency'
+import { converteCurrencyToCurremtLanguage } from '../../Context/Utils/ConverteCurrency'
 import { useTranslation } from 'react-i18next'
 import { TransactionContext } from '../../Context/Transaction/context'
 

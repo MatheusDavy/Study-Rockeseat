@@ -7,11 +7,10 @@ import { light } from "./styles/themes/light"
 import { dark } from "./styles/themes/dark"
 
 import { ChangeThemeContext, ChangeThemeProvider } from "./Context/Theme"
-import { ActiveAsidebarProvider } from "./Context/ActiveAsidebar"
 import "./API/home"
-import { CreditCardProvider } from "./Context/CreditCard"
-import { TransactionsProvider } from "./Context/Transactions"
-import { TransactionProvider } from "./Context/Transaction"
+import TransactionContextProvider from "./Context/Transaction"
+import CreditCardContextProvider from "./Context/CreditCard"
+import { GoalsContextProvider } from "./Context/Goals"
 
 function App() {
 
@@ -19,11 +18,15 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <CreditCardProvider>
-       <TransactionProvider>
-        <Router />
-       </TransactionProvider>
-      </CreditCardProvider>
+
+      <CreditCardContextProvider>
+        <TransactionContextProvider>
+         <GoalsContextProvider>
+            <Router />
+         </GoalsContextProvider>
+        </TransactionContextProvider>
+      </CreditCardContextProvider>
+
       <GlobalStyle />
     </ThemeProvider>
 

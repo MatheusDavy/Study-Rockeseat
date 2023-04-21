@@ -4,7 +4,7 @@ import { fontTemplate } from "../../styles/templates/fonts";
 
 /*------------/ Credit Card Image /--------------*/
 interface CreditCardProps {
-    typeCardFlag: null | "express" | "elo" | "visa" | "mastercard";
+    typeCardFlag: 'null' | "express" | "elo" | "visa" | "mastercard";
 }
 
 const changeBg = (typeFlag: string) => {

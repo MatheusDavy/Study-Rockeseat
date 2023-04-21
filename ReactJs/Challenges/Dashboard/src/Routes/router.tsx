@@ -5,6 +5,7 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import { DefaultLayout } from '../Layouts/DefaultLayout'
 import { Home } from '../Pages/Home'
 import { WalletPage } from '../Pages/Wallet'
+import { Goals } from '../Pages/Goals'
 
 export function Router() {
     return (
@@ -13,6 +14,7 @@ export function Router() {
             <Route path="/" element={<DefaultLayout />}>
                 <Route path='/' element={<Home />} />
                 <Route path='/wallet' element={<WalletPage />} />
+                <Route path='/goals' element={<Goals />} />
             </Route>
         </Routes>
        </BrowserRouter>

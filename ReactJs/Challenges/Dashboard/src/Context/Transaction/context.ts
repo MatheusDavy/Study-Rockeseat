@@ -1,12 +1,4 @@
-import { MutableRefObject, createContext } from "react";
-import { TransactionsProps } from "./reducer";
-
-
-interface ContextProps {
-    actionCurrent: any
-    transactions_API: TransactionsProps
-    openCloseModal: ()=> void
-    isOpenModal: boolean
-}
+import { createContext } from "react";
+import { ContextProps } from "./interfaces";
 
 export const TransactionContext = createContext({} as ContextProps)

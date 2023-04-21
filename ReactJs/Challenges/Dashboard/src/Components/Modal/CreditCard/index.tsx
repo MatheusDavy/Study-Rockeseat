@@ -18,11 +18,13 @@ import visaFlag from '../../../Assets/Images/CreditCard/flag-visa.png'
 import eloFlag from '../../../Assets/Images/CreditCard/flag-elo.png'
 import expressFlag from '../../../Assets/Images/CreditCard/flag-american-express.png'
 import mastercardFlag from '../../../Assets/Images/CreditCard/flag-mastercard.png'
-import { CreditCardContext } from "../../../Context/CreditCard";
 
 // Interfaces
-import { ValueCardProps } from "../../../Context/CreditCard";
 import { CreditcardCard } from "../../CreditCardCard";
+
+// Context
+import { useCreditCardContext } from "../../../Context/CreditCard";
+import { CreditCardProps } from "../../../Context/CreditCard/interfaces";
 
 const defaultValues = {
     name: 'Jane',
@@ -33,8 +35,8 @@ const defaultValues = {
 }
 
 export function ModalAddCreditCard() {
-    const { isOpenModal, openCloseCloseModal, updateCrediCardApi, creditCard_API } = useContext(CreditCardContext)
-    const [valuesCard, setValuesCard] = useState<ValueCardProps>(defaultValues)
+    const { isOpenModal, openCloseCloseModal, creditCard_API, actionCurrent } = useCreditCardContext()
+    const [valuesCard, setValuesCard] = useState<CreditCardProps>(defaultValues)
 
     function callMessageError(txt: string) {
         const errorMessagText = document.getElementById('message-error-creditcard-text') as HTMLInputElement
@@ -161,13 +163,11 @@ export function ModalAddCreditCard() {
             callMessageError('Nome do cartão inválido')
             return 0
         }
-
         if (!numCard || numCard[numCard.length - 1] == '_') {
             error = true
             callMessageError('Número do cartão inválido')
             return 0
         }
-
         creditCard_API?.forEach(array => {
             if (array.numberCard == numCard) {
                 error = true
@@ -175,7 +175,6 @@ export function ModalAddCreditCard() {
                 return 0
             }
         })
-
         if (!limit || limit.lenght > 10) {
             error = true
             callMessageError('Limit do cartão inválido')
@@ -186,10 +185,9 @@ export function ModalAddCreditCard() {
             callMessageError('Validate do cartão inválido')
             return 0
         }
-
         // Send data
         if (!error) {
-            updateCrediCardApi(valuesCard)
+            actionCurrent.newCreditCard(valuesCard)
             // Call Success Message
             callMessageSuccess()
             // Reset forms

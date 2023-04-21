@@ -9,7 +9,7 @@ import mastercardFlag from '../../Assets/Images/CreditCard/flag-mastercard.png'
 // Icons
 import {MdDelete} from 'react-icons/md'
 import { useContext } from "react";
-import { CreditCardContext } from "../../Context/CreditCard";
+import { useCreditCardContext } from "../../Context/CreditCard";
 
 interface CreditcardCardProps {
     flag: string | null
@@ -20,13 +20,19 @@ interface CreditcardCardProps {
     roleRemove?: boolean
 }
 
-
 export function CreditcardCard({flag, limit, numberCard, expirationDate, name, roleRemove = false}: CreditcardCardProps) {
 
-    const {removeCreditCard} = useContext(CreditCardContext)
+    const {actionCurrent} = useCreditCardContext()
 
     function handleRemoveCard(){
-        removeCreditCard(numberCard)
+        const creditCard = {
+            flag: flag,
+            limit: limit,
+            numberCard: numberCard,
+            expirationDate: expirationDate,
+            name: name,
+        }
+        actionCurrent.deleteCreditCard(creditCard)
     }
 
     return (

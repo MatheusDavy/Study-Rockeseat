@@ -1,14 +1,18 @@
 import { CreditCardContainer, CreditCardHeader } from "./styles";
 
+// Context
+import { useCreditCardContext } from "../../../../Context/CreditCard";
+
 // Icons
 import { IoMdAddCircle } from 'react-icons/io'
-import { useContext } from "react";
-import { CreditCardContext } from "../../../../Context/CreditCard";
+
+// Components
 import { CreditcardCard } from "../../../../Components/CreditCardCard";
+
 
 export function CreditCards() {
 
-    const { openCloseCloseModal, creditCard_API } = useContext(CreditCardContext)
+    const { openCloseCloseModal, creditCard_API } = useCreditCardContext()
 
     function handleOpenModal() {
         openCloseCloseModal()
@@ -24,18 +28,20 @@ export function CreditCards() {
             </CreditCardHeader>
 
 
-            {creditCard_API?.map(valuesCard => (
-                <CreditcardCard
-                    flag={valuesCard.flag}
-                    limit={valuesCard.limit}
-                    numberCard={valuesCard.numberCard}
-                    expirationDate={valuesCard.expirationDate}
-                    name={valuesCard.name}
-                    roleRemove={true}
+       
+                {creditCard_API?.map(valuesCard => (
+                    <CreditcardCard
+                        flag={valuesCard.flag}
+                        limit={valuesCard.limit}
+                        numberCard={valuesCard.numberCard}
+                        expirationDate={valuesCard.expirationDate}
+                        name={valuesCard.name}
+                        roleRemove={true}
 
-                    key={valuesCard.numberCard}
-                />
-            ))}
+                        key={valuesCard.numberCard}
+                    />
+                ))}
+          
 
         </CreditCardContainer>
     )
