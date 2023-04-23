@@ -6,6 +6,7 @@ import { useGoalsContext } from "../../../Context/Goals";
 import { colorsAvailable, iconsAvailble } from '../../../Context/Goals/datas'
 import { maskInputCurrency } from "../../../Context/Utils/maskCurrency";
 import * as validateType from '../../../Context/Utils/FormValidate/type-validate'
+import { defaultClassError } from "../../../Context/Utils/FormValidate/type-validate";
 
 /* ----------/ Components /---------*/
 //Styles
@@ -17,6 +18,7 @@ import {
     FormsContainer,
     ButtonContainer,
     GroupButton,
+    MessageError,
 } from "./styles";
 
 // Import
@@ -27,6 +29,7 @@ import { InputGroup } from "../../InputsGoals";
 /* ----------/ Icon /---------*/
 import { IoMdClose } from "react-icons/io";
 import { FaClipboardList } from "react-icons/fa";
+import { RiErrorWarningLine } from 'react-icons/ri'
 
 /* ----------/ Interfaces /---------*/
 import { GoalsProps } from "../../../Context/Goals/interfaces";
@@ -54,7 +57,7 @@ const initalValues: GoalsProps = {
 export function GoalsModal() {
     /* ----------/ 1 - States / Const / Variables /---------*/
     const messageId = 'goals'
-    const {isOpenModal, openCloseModal, actionCurrent } = useGoalsContext();
+    const { isOpenModal, openCloseModal, actionCurrent } = useGoalsContext();
     const [inputsValues, setInputValues] = useState(initalValues)
     const [selectColor, setSelectColor] = useState<number | null>(null);
     const [selectIcon, setSelectIcon] = useState<number | null>(null);
@@ -66,6 +69,7 @@ export function GoalsModal() {
 
     const activeButtonColor = (color: string, index: number) => {
         if (selectColor == index) {
+            setInputValues({ ...inputsValues, bgColor: '' })
             return setSelectColor(null)
         }
         setSelectColor(index)
@@ -75,6 +79,7 @@ export function GoalsModal() {
 
     const activeButtonIcon = (icon: string, index: number) => {
         if (selectIcon == index) {
+            setInputValues({ ...inputsValues, icon: '' })
             return setSelectIcon(null)
         }
         setSelectIcon(index)
@@ -88,7 +93,7 @@ export function GoalsModal() {
         const currencyField = fieldName == 'amountInitial' || fieldName == 'amountFinal'
 
         switch (currencyField) {
-            case true : {
+            case true: {
                 const newData = maskInputCurrency(fieldValue)
                 setInputValues((current) => {
                     return {
@@ -114,7 +119,6 @@ export function GoalsModal() {
 
     function handleSubmit() {
         event?.preventDefault()
-
         let name = {
             values: inputsValues.name,
             type: validateType.TYPE_NOT_NULL,
@@ -139,13 +143,24 @@ export function GoalsModal() {
             messageErrorId: `${messageId}-amountInitial`
         }
 
-        
+        let bgColor = {
+            values: inputsValues.bgColor,
+            type: validateType.TYPE_NOT_NULL,
+            messageErrorId: `${messageId}-bgcolor`
+        }
 
-        const isItAllowedToSend = new SubmitFieldsToValidate([name, date, finalAmount, initialAmount])
+        let icon = {
+            values: inputsValues.icon,
+            type: validateType.TYPE_NOT_NULL,
+            messageErrorId: `${messageId}-icon`
+        }
+
+        const isItAllowedToSend = new SubmitFieldsToValidate([name, date, icon, finalAmount, initialAmount, bgColor])
 
         if (isItAllowedToSend.submit()) {
-            const newData = {...inputsValues, id: nextId()}
+            const newData = { ...inputsValues, id: nextId() }
             actionCurrent.newGoals(newData)
+            handleCloseModal()
             return 0
         }
     }
@@ -172,7 +187,7 @@ export function GoalsModal() {
                             value={inputsValues.name}
                             typeInput="text"
                             typeFormat="default"
-                            setValue={(event)=> handleInputValues(event)}
+                            setValue={(event) => handleInputValues(event)}
                             icon={<FaClipboardList size={20} />}
                             label='Nome'
                             borderBottom={true}
@@ -186,7 +201,7 @@ export function GoalsModal() {
                             value={inputsValues.date}
                             typeInput="date"
                             typeFormat="default"
-                            setValue={(event)=> handleInputValues(event)}
+                            setValue={(event) => handleInputValues(event)}
                             icon={<FaClipboardList size={20} />}
                             label='Data'
                             borderBottom={true}
@@ -197,15 +212,21 @@ export function GoalsModal() {
                             <span>Icone</span>
                             <ButtonContainer>
 
-                                {iconsAvailble.map((icon: any, index: number) =>(
-                                    <ButtonIcon 
+                                {iconsAvailble.map((icon: any, index: number) => (
+                                    <div key={index}>
+                                        <ButtonIcon
                                         active={selectIcon == index}
                                         index={index}
-                                        icon={icon.icon}
+                                        icon={icon}
                                         selectButton={activeButtonIcon}
                                     />
+                                    </div>
                                 ))}
                             </ButtonContainer>
+                            <MessageError id={`message-error-${messageId}-icon`} className={defaultClassError}>
+                                <RiErrorWarningLine size={13} />
+                                Selecione um icone
+                            </MessageError>
                         </GroupButton>
                     </div>
 
@@ -218,7 +239,7 @@ export function GoalsModal() {
                             value={inputsValues.amountFinal}
                             typeInput="text"
                             typeFormat="currency"
-                            setValue={(event)=> handleInputValues(event)}
+                            setValue={(event) => handleInputValues(event)}
                             icon={<FaClipboardList size={20} />}
                             label='Goal value final'
                             borderBottom={true}
@@ -232,7 +253,7 @@ export function GoalsModal() {
                             value={inputsValues.amountInitial}
                             typeInput="text"
                             typeFormat="currency"
-                            setValue={(event)=> handleInputValues(event)}
+                            setValue={(event) => handleInputValues(event)}
                             icon={<FaClipboardList size={20} />}
                             label='Goal value initial'
                             borderBottom={true}
@@ -244,15 +265,21 @@ export function GoalsModal() {
                             <ButtonContainer>
 
                                 {colorsAvailable.map((color: string, index: number) => (
-                                    <ButtonColor
-                                        bgColor={color}
-                                        selectButton={activeButtonColor}
-                                        active={selectColor == index}
-                                        index={index}
-                                    />
+                                    <div key={index}>
+                                        <ButtonColor
+                                            bgColor={color}
+                                            selectButton={activeButtonColor}
+                                            active={selectColor == index}
+                                            index={index}
+                                        />
+                                    </div>
                                 ))}
 
                             </ButtonContainer>
+                            <MessageError id={`message-error-${messageId}-bgcolor`} className={validateType.defaultClassError}>
+                                <RiErrorWarningLine size={13} />
+                                Selecione uma cor
+                            </MessageError>
                         </GroupButton>
 
                     </div>

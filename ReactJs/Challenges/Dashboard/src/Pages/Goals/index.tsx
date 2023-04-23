@@ -31,16 +31,18 @@ export function Goals() {
                 {goals_API.length != 0 && (
                     <GoalsContent>
                         {goals_API.map(goal => (
-                            <GoalsCard
-                            id={goal.id}
-                            bgColor={goal.bgColor}
-                            percent={goal.percent}
-                            date={goal.date}
-                            amountFinal={goal.amountInitial}
-                            amountInitial={goal.amountFinal}
-                            icon={goal.icon}
-                            name={goal.name}
-                        />
+                            <div key={goal.id}>
+                                <GoalsCard
+                                    id={goal.id}
+                                    bgColor={goal.bgColor}
+                                    percent={goal.percent}
+                                    date={goal.date}
+                                    amountFinal={goal.amountInitial}
+                                    amountInitial={goal.amountFinal}
+                                    icon={goal.icon}
+                                    name={goal.name}
+                                />
+                            </div>
                         ))}
                     </GoalsContent>
                 )}

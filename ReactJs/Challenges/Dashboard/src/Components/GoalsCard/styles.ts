@@ -53,7 +53,7 @@ export const IconBg = styled.div<IconBgProps>`
 `
 
 interface MiddleCardProps {
-    percentConcluded: number
+    percentConcluded: number | string
 }
 
 export const MiddleCard = styled.div<MiddleCardProps>`

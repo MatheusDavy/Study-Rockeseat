@@ -1,24 +1,56 @@
+import { useEffect, useState } from "react";
+
+//Components
 import { ContainerCard, ContentInfo, FooterCard, HeaderCard, IconBg, MiddleCard } from "./styles";
+
+// Context
+import { iconsAvailble } from "../../Context/Goals/datas";
+import { converteCurrencyToCurremtLanguage } from "../../Context/Utils/ConverteCurrency";
+import { useGoalsContext } from "../../Context/Goals";
+import { useTranslation } from "react-i18next";
 
 // Interfaces
 import { GoalsProps } from "../../Context/Goals/interfaces";
 
 // Icons
-import { GiReceiveMoney } from 'react-icons/gi'
-import { BiEditAlt } from 'react-icons/bi'
 import { MdDelete, MdEdit } from 'react-icons/md'
-import { useGoalsContext } from "../../Context/Goals";
-import { converteCurrencyToCurremtLanguage } from "../../Context/Utils/ConverteCurrency";
-import { useTranslation } from "react-i18next";
+
+/*
+    SUMMARY
+    1 - States / Context / Const
+    2 - UseEffect
+    3 - Functions
+    4 - Return
+*/
+
 
 
 export function GoalsCard({bgColor, percent, name, date, icon, id, amountFinal, amountInitial}: GoalsProps) {
 
-    const {actionCurrent, openCloseEditModal} = useGoalsContext()
-
+    /*-------------/ 1 - States / Context /-------------*/
     const { i18n } = useTranslation()
     const currentLanguage = i18n.language
+
+    const {actionCurrent, openCloseEditModal} = useGoalsContext()
+    const [iconElement, setIcon] = useState<any>(null)
+
+    const newPercent = percent.toFixed(2)
+    const newAmountInital = converteCurrencyToCurremtLanguage(amountInitial, currentLanguage, false)
+    const newAmountFinal = converteCurrencyToCurremtLanguage(amountFinal, currentLanguage, false)
+
+    /*-------------/ 2 - UseEffect /-------------*/
+    useEffect(()=>{
+        let iconData 
+        iconsAvailble.forEach((iconArray: any) => {
+            if(iconArray.name == icon){
+                iconData = iconArray.icon
+            }
+        })
+
+        setIcon(iconData)
+    },[icon])
     
+    /*-------------/ 3 - Functions /-------------*/
     function handleOpenEditModal(){
         openCloseEditModal(true, id)
     }
@@ -37,15 +69,12 @@ export function GoalsCard({bgColor, percent, name, date, icon, id, amountFinal, 
         actionCurrent.deleteGoals(goalData)
     }
 
-    const newPercent = percent.toFixed(2)
-    const newAmountInital = converteCurrencyToCurremtLanguage(amountInitial, currentLanguage, false)
-    const newAmountFinal = converteCurrencyToCurremtLanguage(amountFinal, currentLanguage, false)
-
+    /*-------------/ 4 - Return /-------------*/
     return (
         <ContainerCard key={id}>
             <HeaderCard>
                 <IconBg bgColor={bgColor}>
-                    {icon}
+                    {iconElement}
                 </IconBg>
                 <h3 className="title">{name}</h3>
             </HeaderCard>

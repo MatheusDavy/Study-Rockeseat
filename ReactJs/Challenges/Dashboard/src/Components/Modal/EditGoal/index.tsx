@@ -5,6 +5,8 @@ import nextId from "react-id-generator";
 import { useGoalsContext } from "../../../Context/Goals";
 import { colorsAvailable, iconsAvailble } from "../../../Context/Goals/datas";
 import { maskInputCurrency } from "../../../Context/Utils/maskCurrency";
+import * as validateType from '../../../Context/Utils/FormValidate/type-validate'
+import { defaultClassError } from "../../../Context/Utils/FormValidate/type-validate";
 
 /* ----------/ Components /---------*/
 //Styles
@@ -15,7 +17,8 @@ import {
     ButtonSubmit,
     FormsContainer,
     GroupButton,
-    ButtonContainer
+    ButtonContainer,
+    MessageError
 } from "./styles";
 
 //import
@@ -26,9 +29,11 @@ import { ButtonColor } from "../../Buttons/SelectColors";
 /* ----------/ Icon /---------*/
 import { IoMdClose } from "react-icons/io";
 import { FaClipboardList } from "react-icons/fa";
+import { RiErrorWarningLine } from 'react-icons/ri'
 
 /* ----------/ Interfaces /---------*/
 import { GoalsProps } from "../../../Context/Goals/interfaces";
+import SubmitFieldsToValidate from "../../../Context/Utils/FormValidate/validate";
 
 /*
     SUMMARY
@@ -79,6 +84,7 @@ export function GoalsEditModal() {
 
     const activeButtonColor = (color: string, index: number) => {
         if (selectColor == index) {
+            setInputValues({ ...inputsValues, bgColor: '' })
             return setSelectColor(null)
         }
         setSelectColor(index)
@@ -88,6 +94,7 @@ export function GoalsEditModal() {
 
     const activeButtonIcon = (icon: string, index: number) => {
         if (selectIcon == index) {
+            setInputValues({ ...inputsValues, icon: '' })
             return setSelectIcon(null)
         }
         setSelectIcon(index)
@@ -128,42 +135,46 @@ export function GoalsEditModal() {
         event?.preventDefault()
         let error = false
 
-        // Forms Validation
-        // if (!inputsValues.name) {
-        //     error = true
-        //     // callMessageError('Nome inválido')
-        //     return 0
-        // }
+        let name = {
+            values: inputsValues.name,
+            type: validateType.TYPE_NOT_NULL,
+            messageErrorId: `${messageId}-name`
+        }
 
-        // if(!inputsValues.date){
-        //     error = true
-        //     // callMessageError('Data inválida')
-        //     return 0
-        // }
+        let date = {
+            values: inputsValues.date,
+            type: validateType.TYPE_NOT_NULL,
+            messageErrorId: `${messageId}-date`
+        }
 
-        // if ((!goalAmount || goalAmount[0] == '0') && !error) {
-        //     error = true
-        //     // callMessageError('O valor não pode ser 0!')
-        //     return 0
-        // }
+        let finalAmount = {
+            values: inputsValues.amountFinal,
+            type: validateType.TYPE_CURRENCY,
+            messageErrorId: `${messageId}-amountFinal`
+        }
 
-        // if ((!initialGoalAmount || initialGoalAmount[0] == '0') && !error) {
-        //     error = true
-        //     // callMessageError('O valor não pode ser 0!')
-        //     return 0
-        // }
-        // if(!iconSelect){
-        //     error = true
-        //     // callMessageError('Selecione um ícone!')
-        //     return 0
-        // }
-        // if(!colorSelect){
-        //     error = true
-        //     // callMessageError('Selecione uma cor!')
-        //     return 0
-        // }
+        let initialAmount = {
+            values: inputsValues.amountInitial,
+            type: validateType.TYPE_CURRENCY,
+            messageErrorId: `${messageId}-amountInitial`
+        }
 
-        if (!error) {
+        let bgColor = {
+            values: inputsValues.bgColor,
+            type: validateType.TYPE_NOT_NULL,
+            messageErrorId: `${messageId}-bgcolor`
+        }
+
+        let icon = {
+            values: inputsValues.icon,
+            type: validateType.TYPE_NOT_NULL,
+            messageErrorId: `${messageId}-icon`
+        }
+
+        const isItAllowedToSend = new SubmitFieldsToValidate([name, date, icon, finalAmount, initialAmount, bgColor])
+
+
+        if (isItAllowedToSend) {
             actionCurrent.updateGoals(inputsValues)
             handleCloseModal()
             return 0
@@ -177,13 +188,13 @@ export function GoalsEditModal() {
         <ModalLayer isOpen={isOpenEditModal.isOpenModal}>
             <ModalContainer>
                 <ModalHeader>
-                    <h1 className="title">Goals</h1>
+                    <h1 className="title">Edit Goals</h1>
                     <button className="btn--close-modal-goals" onClick={handleCloseModal}>
                         <IoMdClose size={24} />
                     </button>
                 </ModalHeader>
 
-                <FormsContainer id="goal-form" onSubmit={handleSubmit}>
+                <FormsContainer id="goal-edit-form" onSubmit={handleSubmit}>
                     <div className="item item-1">
 
                         <InputGroup
@@ -219,14 +230,20 @@ export function GoalsEditModal() {
                             <ButtonContainer>
 
                                 {iconsAvailble.map((icon: any, index: number) =>(
-                                    <ButtonIcon 
+                                    <div key={index}>
+                                        <ButtonIcon 
                                         active={selectIcon == index}
                                         index={index}
-                                        icon={icon.icon}
+                                        icon={icon}
                                         selectButton={activeButtonIcon}
                                     />
+                                    </div>
                                 ))}
                             </ButtonContainer>
+                            <MessageError id={`message-error-${messageId}-icon`} className={defaultClassError}>
+                                <RiErrorWarningLine size={13} />
+                                Selecione um icone
+                            </MessageError>
                         </GroupButton>
                     </div>
 
@@ -265,21 +282,29 @@ export function GoalsEditModal() {
                             <ButtonContainer>
 
                                 {colorsAvailable.map((color: string, index: number) => (
-                                    <ButtonColor
+                                    <div key={index}>
+                                        <ButtonColor
                                         bgColor={color}
                                         selectButton={activeButtonColor}
                                         active={selectColor == index}
                                         index={index}
                                     />
+                                    </div>
                                 ))}
 
                             </ButtonContainer>
+
+                            <MessageError id={`message-error-${messageId}-bgcolor`} className={defaultClassError}>
+                                <RiErrorWarningLine size={13} />
+                                Selecione uma cor
+                            </MessageError>
+                            
                         </GroupButton>
 
                     </div>
                 </FormsContainer>
 
-                <ButtonSubmit type="submit" form="goal-form">
+                <ButtonSubmit type="submit" form="goal-edit-form">
                     ENVIAR
                 </ButtonSubmit>
             </ModalContainer>

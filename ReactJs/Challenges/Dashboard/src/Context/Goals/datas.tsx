@@ -5,16 +5,20 @@ import { IoPhonePortrait } from 'react-icons/io5'
 
 export const iconsAvailble = [
     {
-        icon: <BsFillHouseFill size={18}/>
+        icon: <BsFillHouseFill size={18}/>,
+        name: 'BsFillHouseFill'
     },
     {
-        icon: <AiFillCar size={18}/>
+        icon: <AiFillCar size={18}/>,
+        name: 'AiFillCar'
     },
     {
-        icon: <GiReceiveMoney size={18}/>
+        icon: <GiReceiveMoney size={18}/>,
+        name: 'GiReceiveMoney'
     },
     {
-        icon: <IoPhonePortrait size={18}/>
+        icon: <IoPhonePortrait size={18}/>,
+        name: 'IoPhonePortrait'
     },
 ]
 

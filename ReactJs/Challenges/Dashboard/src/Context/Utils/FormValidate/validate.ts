@@ -42,7 +42,6 @@ class ValidationForms {
                 break;
             }
             case validationType.TYPE_NOT_NULL: {
-                console.log(this.input)
                 if (this.input == '') {
                     this.showMessageError();
                     this.error = true;

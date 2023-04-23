@@ -26,14 +26,16 @@ export function Transactions() {
         </TransactionsHeader>
 
         {transactions_API.transactionAPI?.map(transaction => (
-          <TransactionsTable
-            key={transaction.id}
-            id={transaction.id}
-            type={transaction.type}
-            amount={transaction.amount}
-            description={transaction.description}
-            date={transaction.date}
-          />
+          <div key={transaction.id}>
+            <TransactionsTable
+              key={transaction.id}
+              id={transaction.id}
+              type={transaction.type}
+              amount={transaction.amount}
+              description={transaction.description}
+              date={transaction.date}
+            />
+          </div>
         ))}
 
 

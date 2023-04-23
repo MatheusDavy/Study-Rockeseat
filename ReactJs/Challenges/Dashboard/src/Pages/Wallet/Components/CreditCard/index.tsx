@@ -30,16 +30,16 @@ export function CreditCards() {
 
        
                 {creditCard_API?.map(valuesCard => (
-                    <CreditcardCard
+                    <div key={valuesCard.numberCard}>
+                        <CreditcardCard
                         flag={valuesCard.flag}
                         limit={valuesCard.limit}
                         numberCard={valuesCard.numberCard}
                         expirationDate={valuesCard.expirationDate}
                         name={valuesCard.name}
                         roleRemove={true}
-
-                        key={valuesCard.numberCard}
                     />
+                    </div>
                 ))}
           
 

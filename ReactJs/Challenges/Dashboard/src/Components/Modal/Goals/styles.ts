@@ -7,7 +7,7 @@ import { fontTemplate } from "../../../styles/templates/fonts";
     2 - Styled Components
       2.1 - Modal Layer / Container
       2.2 - Modal Inside Content
-
+    3 - Error Message
 */
 
 /* ----------/ 1 - Interfaces /---------*/
@@ -150,4 +150,17 @@ export const ButtonSubmit = styled.button`
     border: 0;
   `}
 `;
+/* ----------/ 3 - Error Message /---------*/
+export const MessageError = styled.div`
+  ${({ theme }) => css`
+    ${fontTemplate("1.2rem", "1", 300, "", "Arial")}
+    color: ${theme.colorsStandard.red};
+    display: none;
 
+  &.show--error {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  `}
+`;

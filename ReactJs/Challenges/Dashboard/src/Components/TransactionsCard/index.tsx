@@ -10,7 +10,7 @@ import { useTrsactionContext } from "../../Context/Transaction";
 
 interface TransactionsTableProps {
     type: "income" | "expense"
-    amount: number
+    amount: number | string
     description: string
     date: string
     id: string
