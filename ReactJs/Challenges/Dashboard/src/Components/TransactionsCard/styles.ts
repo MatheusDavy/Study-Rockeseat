@@ -41,11 +41,26 @@ export const TransactionsDescription = styled.div<TypeTransactionsProps>`
     }
   `}
 `;
+
 export const TransactionsAmount = styled.div<TypeTransactionsProps>`
   ${({ theme, type }) => css`
-  ${fontTemplate("1.5rem", "1", 800, ``, "Arial")}
+    ${fontTemplate("1.5rem", "1", 800, ``, "Arial")}
     color: ${type == "income"
       ? theme.colorsStandard.green
       : theme.colorsStandard.red};
+  `}
+`;
+
+export const ButtonDelete = styled.div`
+  ${({ theme }) => css`
+    cursor: pointer;
+    svg {
+      color: ${theme.colorsStandard.gray};
+    }
+    &:hover {
+      svg {
+        color: ${theme.colors.secundary};
+      }
+    }
   `}
 `;

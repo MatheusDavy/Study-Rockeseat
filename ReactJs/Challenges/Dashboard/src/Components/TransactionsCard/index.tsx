@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { TransactionsDescription, TransactionsContainer, TransactionsAmount } from "./styles";
+import { TransactionsDescription, TransactionsContainer, TransactionsAmount, ButtonDelete } from "./styles";
 
 // Icons
 import { BsArrowUpCircle, BsArrowDownCircle } from 'react-icons/bs'
@@ -7,6 +7,8 @@ import { MdDelete } from 'react-icons/md'
 // import { TransactionsContext } from "../../Context/Transactions";
 import { TransactionContext } from "../../Context/Transaction/context";
 import { useTrsactionContext } from "../../Context/Transaction";
+import { converteCurrencyToCurremtLanguage } from "../../Context/Utils/ConverteCurrency";
+import { useTranslation } from "react-i18next";
 
 interface TransactionsTableProps {
     type: "income" | "expense"
@@ -14,12 +16,15 @@ interface TransactionsTableProps {
     description: string
     date: string
     id: string
+    isAbleToEdit?: boolean
 }
 
-export function TransactionsTable({ type, amount, description, date, id }: TransactionsTableProps) {
-    const {transactions_API, actionCurrent} = useTrsactionContext();
+export function TransactionsTable({ type, amount, description, date, id, isAbleToEdit = true }: TransactionsTableProps) {
+    const { transactions_API, actionCurrent } = useTrsactionContext();
+    const { i18n } = useTranslation()
+    const currentLanguage = i18n.language
 
-    function handleRemoveTransaction(){
+    function handleRemoveTransaction() {
         const cardProps = {
             id: id,
             date: date,
@@ -29,6 +34,8 @@ export function TransactionsTable({ type, amount, description, date, id }: Trans
         }
         actionCurrent.deleteTransaction(cardProps)
     }
+
+    const newAmountFinal = converteCurrencyToCurremtLanguage(amount, currentLanguage, false)
 
     return (
         <TransactionsContainer>
@@ -47,14 +54,16 @@ export function TransactionsTable({ type, amount, description, date, id }: Trans
 
 
             <TransactionsAmount type={type}>
-                {type == "income" && (amount)}
+                {type == "income" && (`${newAmountFinal}`)}
 
-                {type == "expense" && (`- ${amount}`)}
+                {type == "expense" && (`- ${newAmountFinal}`)}
             </TransactionsAmount>
 
-            <button onClick={handleRemoveTransaction}>
-                <MdDelete size={24} />
-            </button>
+            {!!isAbleToEdit && (
+                <ButtonDelete onClick={handleRemoveTransaction}>
+                    <MdDelete size={24} />
+                </ButtonDelete>
+            )}
         </TransactionsContainer>
     )
 }

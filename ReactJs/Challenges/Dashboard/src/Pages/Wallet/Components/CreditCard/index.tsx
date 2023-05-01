@@ -37,7 +37,6 @@ export function CreditCards() {
                         numberCard={valuesCard.numberCard}
                         expirationDate={valuesCard.expirationDate}
                         name={valuesCard.name}
-                        roleRemove={true}
                     />
                     </div>
                 ))}

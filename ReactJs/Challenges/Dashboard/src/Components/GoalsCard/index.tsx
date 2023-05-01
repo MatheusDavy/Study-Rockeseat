@@ -12,6 +12,10 @@ import { useTranslation } from "react-i18next";
 // Interfaces
 import { GoalsProps } from "../../Context/Goals/interfaces";
 
+interface Props extends GoalsProps {
+    isAbleToEdit?: boolean
+}
+
 // Icons
 import { MdDelete, MdEdit } from 'react-icons/md'
 
@@ -25,37 +29,38 @@ import { MdDelete, MdEdit } from 'react-icons/md'
 
 
 
-export function GoalsCard({bgColor, percent, name, date, icon, id, amountFinal, amountInitial}: GoalsProps) {
+export function GoalsCard({ bgColor, percent, name, date, icon, id, amountFinal, amountInitial, isAbleToEdit = true }: Props) {
 
     /*-------------/ 1 - States / Context /-------------*/
     const { i18n } = useTranslation()
     const currentLanguage = i18n.language
 
-    const {actionCurrent, openCloseEditModal} = useGoalsContext()
+    const { actionCurrent, openCloseEditModal } = useGoalsContext()
     const [iconElement, setIcon] = useState<any>(null)
 
     const newPercent = percent.toFixed(2)
+    console.log(amountInitial)
     const newAmountInital = converteCurrencyToCurremtLanguage(amountInitial, currentLanguage, false)
     const newAmountFinal = converteCurrencyToCurremtLanguage(amountFinal, currentLanguage, false)
 
     /*-------------/ 2 - UseEffect /-------------*/
-    useEffect(()=>{
-        let iconData 
+    useEffect(() => {
+        let iconData
         iconsAvailble.forEach((iconArray: any) => {
-            if(iconArray.name == icon){
+            if (iconArray.name == icon) {
                 iconData = iconArray.icon
             }
         })
 
         setIcon(iconData)
-    },[icon])
-    
+    }, [icon])
+
     /*-------------/ 3 - Functions /-------------*/
-    function handleOpenEditModal(){
+    function handleOpenEditModal() {
         openCloseEditModal(true, id)
     }
 
-    function handleDeleteGoals(){
+    function handleDeleteGoals() {
         const goalData = {
             id: id,
             bgColor: bgColor,
@@ -98,14 +103,16 @@ export function GoalsCard({bgColor, percent, name, date, icon, id, amountFinal, 
                 </p>
             </MiddleCard>
 
-            <FooterCard>
+            {isAbleToEdit && (
+                <FooterCard>
 
-                <button onClick={handleOpenEditModal}><MdEdit size={20} /></button>
+                    <button onClick={handleOpenEditModal}><MdEdit size={20} /></button>
 
-                <button onClick={handleDeleteGoals}><MdDelete size={20} /></button>
+                    <button onClick={handleDeleteGoals}><MdDelete size={20} /></button>
 
 
-            </FooterCard>
+                </FooterCard>
+            )}
 
         </ContainerCard>
     )

@@ -5,7 +5,7 @@ export interface CreditCardProps {
     numberCard: string
     expirationDate: string
     limit: number
-    flag: string | null
+    flag: null | "express" | "elo" | "visa" | "mastercard"
 }
 
 export interface ChildrenProviderProps {

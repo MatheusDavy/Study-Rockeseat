@@ -1,4 +1,11 @@
-import { ContainerHover, CreditCardContainer, CreditCardFooter, CreditCardHeader } from "./styles";
+//Components
+import { ContainerHover, CreditCardContainer, CreditCardContainerHome, CreditCardFooter, CreditCardHeader } from "./styles";
+
+// Icons
+import { MdDelete } from 'react-icons/md'
+
+// Context
+import { useCreditCardContext } from "../../Context/CreditCard";
 
 // Imagem
 import visaFlag from '../../Assets/Images/CreditCard/flag-visa.png'
@@ -6,25 +13,30 @@ import eloFlag from '../../Assets/Images/CreditCard/flag-elo.png'
 import expressFlag from '../../Assets/Images/CreditCard/flag-american-express.png'
 import mastercardFlag from '../../Assets/Images/CreditCard/flag-mastercard.png'
 
-// Icons
-import {MdDelete} from 'react-icons/md'
-import { useContext } from "react";
-import { useCreditCardContext } from "../../Context/CreditCard";
-
+//Interfaces
 interface CreditcardCardProps {
-    flag: string | null
+    flag: null | "express" | "elo" | "visa" | "mastercard"
     limit: number
     numberCard: string
     expirationDate: string
     name: string
-    roleRemove?: boolean
+    isAbleToEdit?: boolean
 }
 
-export function CreditcardCard({flag, limit, numberCard, expirationDate, name, roleRemove = false}: CreditcardCardProps) {
+/*
+    SUMARY
+        1 - Context
+        2 - Functions
+        3 - Return
+*/
 
-    const {actionCurrent} = useCreditCardContext()
+export function CreditcardCard({ flag, limit, numberCard, expirationDate, name, isAbleToEdit = true }: CreditcardCardProps) {
 
-    function handleRemoveCard(){
+    /*--------------/ 1 - Context /---------------*/
+    const { actionCurrent } = useCreditCardContext()
+
+    /*--------------/ 2 - Functions /---------------*/
+    function handleRemoveCard() {
         const creditCard = {
             flag: flag,
             limit: limit,
@@ -35,46 +47,68 @@ export function CreditcardCard({flag, limit, numberCard, expirationDate, name, r
         actionCurrent.deleteCreditCard(creditCard)
     }
 
+    /*--------------/ 3 - Return /---------------*/
     return (
-        <CreditCardContainer typeCardCredit={flag}>
-            <CreditCardHeader>
-                <div className="amount-container">
-                    <span className="limit">Limit</span>
-                    <span className="amount">{limit}</span>
-                </div>
+        <>
+            {isAbleToEdit ? (
+                <CreditCardContainer typeCardCredit={flag}>
+                    <CreditCardHeader>
+                        <div className="amount-container">
+                            <span className="limit">Limit</span>
+                            <span className="amount">{limit}</span>
+                        </div>
 
-                {flag === 'visa' && <img src={visaFlag} alt="" className="flag" />}
-                {flag === 'elo' && <img src={eloFlag} alt="" className="flag" />}
-                {flag === 'express' && <img src={expressFlag} alt="" className="flag" />}
-                {flag === 'mastercard' && <img src={mastercardFlag} alt="" className="flag" />}
-                {flag === '' && ''}
+                        {flag === 'visa' && <img src={visaFlag} alt="" className="flag" />}
+                        {flag === 'elo' && <img src={eloFlag} alt="" className="flag" />}
+                        {flag === 'express' && <img src={expressFlag} alt="" className="flag" />}
+                        {flag === 'mastercard' && <img src={mastercardFlag} alt="" className="flag" />}
+                        {flag === null && ''}
 
-            </CreditCardHeader>
+                    </CreditCardHeader>
 
-            <h3 className="name--card">{name}</h3>
+                    <h3 className="name--card">{name}</h3>
 
-            <CreditCardFooter>
-                <span className="number--card">{numberCard}</span>
-                <span className="expiration--date">{expirationDate}</span>
-            </CreditCardFooter>
+                    <CreditCardFooter>
+                        <span className="number--card">{numberCard}</span>
+                        <span className="expiration--date">{expirationDate}</span>
+                    </CreditCardFooter>
 
-            {roleRemove && (
-                <ContainerHover id='hover--data'>
 
-                    <button onClick={handleRemoveCard}>
-                        <MdDelete size={24}/>
-                    </button>
+                    <ContainerHover id='hover--data'>
 
-                    <ul>
-                        <li>{name}</li>
-                        <li>{limit}</li>
-                        <li>{numberCard}</li>
-                        <li>{expirationDate}</li>
-                    </ul>
+                        <button onClick={handleRemoveCard}>
+                            <MdDelete size={24} />
+                        </button>
 
-                </ContainerHover>
+                        <ul>
+                            <li>{name}</li>
+                            <li>{limit}</li>
+                            <li>{numberCard}</li>
+                            <li>{expirationDate}</li>
+                        </ul>
+
+                    </ContainerHover>
+                </CreditCardContainer>
+
+            ) : (
+                <CreditCardContainerHome typeCardCredit={flag}>
+                    <>
+                        <CreditCardHeader isHomeComponent={true}>
+
+                            {flag === 'visa' && <img src={visaFlag} alt="" className="flag" />}
+                            {flag === 'elo' && <img src={eloFlag} alt="" className="flag" />}
+                            {flag === 'express' && <img src={expressFlag} alt="" className="flag" />}
+                            {flag === 'mastercard' && <img src={mastercardFlag} alt="" className="flag" />}
+                            {flag === null && ''}
+
+                        </CreditCardHeader>
+
+                        <h3 className="name--card">{name}</h3>
+                    </>
+                </CreditCardContainerHome>
             )}
+        </>
 
-        </CreditCardContainer>
+        
     )
 }
