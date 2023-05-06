@@ -1,0 +1,5 @@
+Os modulos são scripts reaproveitáveis
+São dividos em 3 categorias:
+    *   Internos: Os que propriamente criamos
+    *   Externos: O que usamos via NPM
+    *   Core Modules: O do próprio NodeJs
